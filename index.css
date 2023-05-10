@@ -1,3 +1,16 @@
+body,
+html {
+    height: 100%;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+}
+
 #pokemon {
     display: flex;
     flex-wrap: wrap;
@@ -7,8 +20,8 @@
 h3 {
     font-size: 14px;
     text-transform: uppercase;
-  }
-  
+}
+
 
 .pokeCard {
     width: 200px;
@@ -24,6 +37,47 @@ h3 {
     justify-content: center;
 }
 
+.filterCard {
+    width: auto;
+    height: auto;
+    margin: 10px;
+    padding: 10px;
+    border: 1px solid black;
+    border-radius: 10px;
+    background-color: #202020;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-evenly;
+    flex-direction: column;
+}
+
+.filterHeader {
+    display: flex;
+    justify-content: center;
+}
+
+.filterCheckboxes {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.titleCard {
+    width: 250px;
+    height: auto;
+    margin: 10px;
+    padding: 10px;
+    border: 1px solid black;
+    border-radius: 10px;
+    background-color: #202020;
+    display: flex;
+    flex-wrap: wrap;
+    ;
+    align-items: center;
+    justify-content: center;
+}
+
 @font-face {
     font-family: "PKMN RBYGSC";
     src: url("/path/to/PKMN_RBYGSC.ttf") format("truetype");
@@ -32,9 +86,86 @@ h3 {
 body {
     font-family: "PKMN RBYGSC", sans-serif;
     background-color: #e83032;
+    /* background-color: black; */
 }
 
 .modal-body {
     text-align: left;
-  }
-  
+}
+
+/* Define colors for each element type */
+label.form-check-label[for="normal"] {
+    color: #A8A878;
+}
+
+label.form-check-label[for="fighting"] {
+    color: #C03028;
+}
+
+label.form-check-label[for="flying"] {
+    color: #A890F0;
+}
+
+label.form-check-label[for="poison"] {
+    color: #A040A0;
+}
+
+label.form-check-label[for="ground"] {
+    color: #E0C068;
+}
+
+label.form-check-label[for="rock"] {
+    color: #B8A038;
+}
+
+label.form-check-label[for="bug"] {
+    color: #A8B820;
+}
+
+label.form-check-label[for="ghost"] {
+    color: #705898;
+}
+
+label.form-check-label[for="steel"] {
+    color: #B8B8D0;
+}
+
+label.form-check-label[for="fire"] {
+    color: #F08030;
+}
+
+label.form-check-label[for="water"] {
+    color: #6890F0;
+}
+
+label.form-check-label[for="grass"] {
+    color: #78C850;
+}
+
+label.form-check-label[for="electric"] {
+    color: #F8D030;
+}
+
+label.form-check-label[for="psychic"] {
+    color: #F85888;
+}
+
+label.form-check-label[for="ice"] {
+    color: #98D8D8;
+}
+
+label.form-check-label[for="dragon"] {
+    color: #7038F8;
+}
+
+label.form-check-label[for="fairy"] {
+    color: #EE99AC;
+}
+
+label.form-check-label[for="unknown"] {
+    color: #68A090;
+}
+
+label.form-check-label[for="shadow"] {
+    color: #705898;
+}
