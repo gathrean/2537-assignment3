@@ -1,0 +1,40 @@
+#pokemon {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+h3 {
+    font-size: 14px;
+    text-transform: uppercase;
+  }
+  
+
+.pokeCard {
+    width: 200px;
+    height: 200px;
+    margin: 10px;
+    padding: 10px;
+    border: 1px solid black;
+    border-radius: 10px;
+    background-color: #f5f5f5;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+@font-face {
+    font-family: "PKMN RBYGSC";
+    src: url("/path/to/PKMN_RBYGSC.ttf") format("truetype");
+}
+
+body {
+    font-family: "PKMN RBYGSC", sans-serif;
+    background-color: #e83032;
+}
+
+.modal-body {
+    text-align: left;
+  }
+  
