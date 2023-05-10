@@ -2,7 +2,7 @@ var pokemon = [];
 
 const numPerPage = 10;
 var numPages = 0;
-const numPageBtn = 5;
+const numPageBtn = 5; // Only show five buttons at the most
 
 
 const setup = async () => {
@@ -14,6 +14,10 @@ const setup = async () => {
     pokemon = response.data.results;
     numPages = Math.ceil(pokemon.length / numPerPage);
     console.log("numPages: " + numPages);
+
+    $('#pagination').append(`
+    <button type="button" class="btn btn-dark" disabled>PREV</button>
+  `);
 
     showPage(1);
 
@@ -64,18 +68,20 @@ const setup = async () => {
 };
 
 async function showPage(currentPage) {
+
+    // Makes sure the page doesn't show pages that are outside of the range
     if (currentPage < 1) {
         currentPage = 1;
     }
     if (currentPage > numPages) {
         currentPage = numPages;
     }
-
     console.log("showPage: " + currentPage);
     console.log("start: ", ((currentPage - 1) * numPerPage));
     console.log("end: ", ((currentPage - 1) * numPerPage) + numPerPage);
     console.log("pokemon.length: ", pokemon.length);
 
+    // 
     $('#pokemon').empty();
     for (let i = (currentPage - 1) * numPerPage; i < currentPage * numPerPage; i++) {
         if (i >= pokemon.length) {
@@ -94,15 +100,10 @@ async function showPage(currentPage) {
         `);
     }
 
-    // add pagination buttons
+    // Adds Pagination buttons
     $('#pagination').empty();
     var startI = Math.max(1, currentPage - Math.floor(numPageBtn / 2));
     var endI = Math.min(numPages, startI + numPageBtn - 1);
-    console.log("startI: " + startI);
-    console.log("endI: " + endI);
-    console.log("numPages: " + numPages);
-    console.log("currentPage: " + currentPage);
-    console.log("numPageBtn: " + numPageBtn);
 
     if (currentPage > Math.floor(numPageBtn / 2)) {
         $('#pagination').append(`
@@ -110,11 +111,29 @@ async function showPage(currentPage) {
             <button type="button" class="btn btn-dark" disabled>...</button>
         `);
     }
-    for (let i = startI; i <= endI; i++) {
+
+    // Add PREV button
+    if (currentPage > 1) {
         $('#pagination').append(`
-            <button type="button" class="btn btn-dark pageBtn" id="page${i}" pageNum="${i}">${i}</button>
+            <button type="button" class="btn btn-dark pageBtn" id="page${currentPage - 1}" pageNum="${currentPage - 1}">PREV</button>
         `);
     }
+
+    // If the current button's page number matches current page, make it stand out
+    for (let i = startI; i <= endI; i++) {
+        const buttonClass = i === currentPage ? 'btn-success' : 'btn-dark';
+        $('#pagination').append(`
+            <button type="button" class="btn pageBtn ${buttonClass}" id="page${i}" pageNum="${i}">${i}</button>
+        `);
+    }
+
+    // Add NEXT button
+    if (currentPage < numPages) {
+        $('#pagination').append(`
+            <button type="button" class="btn btn-dark pageBtn" id="page${currentPage + 1}" pageNum="${currentPage + 1}">NEXT</button>
+        `);
+    }
+
     if (currentPage < numPages - Math.floor(numPageBtn / 2)) {
         $('#pagination').append(`
             <button type="button" class="btn btn-dark" disabled>...</button>
@@ -124,7 +143,7 @@ async function showPage(currentPage) {
 
     $('body').off('click', '.pageBtn');
     $('body').on('click', '.pageBtn', async function (e) {
-        const pageNum = parseInt($(this).attr('pageNum'))
+        const pageNum = parseInt($(this).attr('pageNum'));
         console.log("=====================pageBtn clicked");
         console.log("pageNum: " + pageNum);
         showPage(pageNum);
