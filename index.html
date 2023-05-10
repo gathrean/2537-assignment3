@@ -11,6 +11,7 @@
         integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
     <link rel="stylesheet" href="index.css">
 
+
     <script src="https://cdn.jsdeliver.net/npm/axios/dist/axios.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
@@ -23,11 +24,99 @@
 <body>
 
     <div class="text-center">
-        <h1 style="color: white">
-            Assignment 3
-        </h1>
-        <br>
+        <h1 style="color: white">Assignment 3</h1>
         <span style="color: white;">By: Gathrean Dela Cruz (A01167248) (Set 2A)</span>
+        <br>
+
+        <!-- Add the select element for filtering -->
+        <div class="container">
+
+            <div class="filterCard" id="pokeTypesFilter" style="color: white">
+                <div class="filterHeader">
+                    <label style="color: white;" for="filterElement">Filter by Element:</label>
+                </div>
+                <div class="filterCheckboxes">
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="checkbox" id="normal" name="type" value="normal">
+                        <label class="form-check-label" for="normal">Normal</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="checkbox" id="fighting" name="type" value="fighting">
+                        <label class="form-check-label" for="fighting">Fighting</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="checkbox" id="flying" name="type" value="flying">
+                        <label class="form-check-label" for="flying">Flying</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="checkbox" id="poison" name="type" value="poison">
+                        <label class="form-check-label" for="poison">Poison</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="checkbox" id="ground" name="type" value="ground">
+                        <label class="form-check-label" for="ground">Ground</label>
+                    </div>
+                    <br>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="checkbox" id="rock" name="type" value="rock">
+                        <label class="form-check-label" for="rock">Rock</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="checkbox" id="bug" name="type" value="bug">
+                        <label class="form-check-label" for="bug">Bug</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="checkbox" id="ghost" name="type" value="ghost">
+                        <label class="form-check-label" for="ghost">Ghost</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="checkbox" id="steel" name="type" value="steel">
+                        <label class="form-check-label" for="steel">Steel</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="checkbox" id="fire" name="type" value="fire">
+                        <label class="form-check-label" for="fire">Fire</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="checkbox" id="water" name="type" value="water">
+                        <label class="form-check-label" for="water">Water</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="checkbox" id="grass" name="type" value="grass">
+                        <label class="form-check-label" for="grass">Grass</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="checkbox" id="electric" name="type" value="electric">
+                        <label class="form-check-label" for="electric">Electric</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="checkbox" id="psychic" name="type" value="psychic">
+                        <label class="form-check-label" for="psychic">Psychic</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="checkbox" id="ice" name="type" value="ice">
+                        <label class="form-check-label" for="ice">Ice</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="checkbox" id="dragon" name="type" value="dragon">
+                        <label class="form-check-label" for="dragon">Dragon</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="checkbox" id="fairy" name="type" value="fairy">
+                        <label class="form-check-label" for="fairy">Fairy</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="checkbox" id="unknown" name="type" value="unknown">
+                        <label class="form-check-label" for="unknown">Unknown</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="checkbox" id="shadow" name="type" value="shadow">
+                        <label class="form-check-label" for="shadow">Shadow</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <div id="pokemon">
             <!-- content goes here -->
         </div>
