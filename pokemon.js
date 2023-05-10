@@ -4,7 +4,6 @@ const numPerPage = 10;
 var numPages = 0;
 const numPageBtn = 5; // Only show five buttons at the most
 
-
 const setup = async () => {
 
     // test out poke api using axios here
@@ -150,5 +149,5 @@ async function showPage(currentPage) {
     });
 }
 
-
+// Call the setup function when the DOM is ready
 $(document).ready(setup);
