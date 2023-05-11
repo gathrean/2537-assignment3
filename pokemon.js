@@ -1,16 +1,20 @@
 var pokemon = [];
+var filteredPokemon = []; // New array to store filtered results
 
 const numPerPage = 10;
 var numPages = 0;
 const numPageBtn = 5; // Only show five buttons at the most
 
 const setup = async () => {
-
-    // test out poke api using axios here
     let response = await axios.get('https://pokeapi.co/api/v2/pokemon?offset=0&limit=810');
     console.log(response.data.results);
 
-    pokemon = response.data.results;
+    pokemon = response.data.results.map((pokemonData) => {
+        return {
+            name: pokemonData.name,
+            url: pokemonData.url
+        };
+    });
     numPages = Math.ceil(pokemon.length / numPerPage);
     console.log("numPages: " + numPages);
 
@@ -18,7 +22,62 @@ const setup = async () => {
     <button type="button" class="btn btn-dark" disabled>PREV</button>
   `);
 
-    showPage(1);
+    // Add a click event listener to filter checkboxes
+    $('input[name="type"]').on('click', function () {
+        filterPokemon();
+        showPage(1, filteredPokemon);
+    });
+
+    filteredPokemon = pokemon.filter(pokemonObj => {
+        if (pokemonObj.types) {
+            const pokemonTypes = [];
+            pokemonObj.types.forEach(type => {
+                pokemonTypes.push(type.type.name);
+            });
+            return selectedTypes.every(type => pokemonTypes.includes(type));
+        }
+        return false;
+    });
+
+    filterPokemon(); // Apply initial filtering
+    showPage(1, filteredPokemon);
+
+
+
+    function filterPokemon() {
+        const selectedTypes = [];
+        // Get the selected types from checkboxes
+        $('input[name="type"]:checked').each(function () {
+            selectedTypes.push($(this).val());
+        });
+
+        if (selectedTypes.length === 0) {
+            // No types selected, show all Pokemon
+            filteredPokemon = pokemon;
+        } else {
+            // Filter Pokemon based on selected types
+            filteredPokemon = pokemon.filter(pokemonObj => {
+                if (pokemonObj.types) {
+                    const pokemonTypes = [];
+                    pokemonObj.types.forEach(type => {
+                        pokemonTypes.push(type.type.name);
+                    });
+                    return selectedTypes.every(type => pokemonTypes.includes(type));
+                }
+                return false;
+            });
+        }
+
+        numPages = Math.ceil(filteredPokemon.length / numPerPage);
+        console.log("Filtered Pokemon: ", filteredPokemon);
+        console.log("numPages: " + numPages);
+
+        // Reset to the first page if the current page is no longer valid
+        const currentPage = parseInt($('.pageBtn.btn-success').attr('pageNum'));
+        if (currentPage > numPages) {
+            showPage(1);
+        }
+    }
 
     // Adds a click event listener to EACH Pokemon card to show details in a modal
     $('body').on('click', '.pokeCard', async function (e) {
@@ -40,7 +99,7 @@ const setup = async () => {
         // Display detailed information in a modal
         $('.modal-body').html(`
             <div style="width:200px">
-            <img src="${res.data.sprites.other['official-artwork'].front_default}" alt="${pokemonName}">
+            <img src="${res.data.sprites?.other?.['official-artwork']?.front_default}" alt="${pokemonName}">
 
                 <div>
                     <h3>ABILITIES</h3>
@@ -72,7 +131,7 @@ const setup = async () => {
 };
 
 // Display a specific page of Pokemon
-async function showPage(currentPage) {
+async function showPage(currentPage, pokemonData) {
 
     // Makes sure the page number is within valid range
     if (currentPage < 1) {
