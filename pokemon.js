@@ -20,22 +20,24 @@ const setup = async () => {
 
     showPage(1);
 
-    // pop up modal when clicking on a pokemon card
-    // add event listener to each pokemon card
-
+    // Adds a click event listener to EACH Pokemon card to show details in a modal
     $('body').on('click', '.pokeCard', async function (e) {
+
         console.log(this);
+
+        // Pokemon's Name
         const pokemonName = $(this).attr('pokeName')
         console.log("pokemonName: " + pokemonName);
+
+        // Detailed data of clicked Pokemon from the PokeAPI
         const res = await axios.get(`https://pokeapi.co/api/v2/pokemon/${pokemonName}`);
         console.log("res.data: ", res.data);
+
+        // Extract the Pokemon's types from the response data
         const types = res.data.types.map((type) => type.type.name);
         console.log("types: ", types);
 
-        console.log("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%");
-        console.log(res.data.abilities.map((ability) => ability.ability.name).join(''));
-        console.log("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%");
-
+        // Display detailed information in a modal
         $('.modal-body').html(`
             <div style="width:200px">
             <img src="${res.data.sprites.other['official-artwork'].front_default}" alt="${pokemonName}">
@@ -52,9 +54,12 @@ const setup = async () => {
                 <h3>TYPES</h3>
                 <ul> ${types.map((type) => `<li>${type}</li>`).join('')}</ul>
         `)
+
+        // Sets the modal title to the Pokemon's name
         $('.modal-title').html(`<h2>${res.data.name}</h2>`)
     })
 
+    // Adds a click event listenet to page buttons
     $('body').on('click', '.pageBtn', async function (e) {
         const pageNum = parseInt($(this).attr('pageNum'))
         console.log("=====================pageBtn clicked");
@@ -66,9 +71,10 @@ const setup = async () => {
 
 };
 
+// Display a specific page of Pokemon
 async function showPage(currentPage) {
 
-    // Makes sure the page doesn't show pages that are outside of the range
+    // Makes sure the page number is within valid range
     if (currentPage < 1) {
         currentPage = 1;
     }
@@ -80,14 +86,20 @@ async function showPage(currentPage) {
     console.log("end: ", ((currentPage - 1) * numPerPage) + numPerPage);
     console.log("pokemon.length: ", pokemon.length);
 
-    // 
+    // Clear previous Pokemon cards from the dispaly area
     $('#pokemon').empty();
+
+    // Iterate over the Pokemon data for the current page and display their cards
     for (let i = (currentPage - 1) * numPerPage; i < currentPage * numPerPage; i++) {
         if (i >= pokemon.length) {
             break;
         }
+
+        // Retrieve additional details of the Pokemon from the API
         let innerResponse = await axios.get(pokemon[i].url);
         let thisPokemon = innerResponse.data;
+
+        // Create and append the Pokemon card to the display area
         $('#pokemon').append(`
             <div class="pokeCard" pokeName="${thisPokemon.name}">
                 <h3>${thisPokemon.name}</h3>
@@ -104,6 +116,7 @@ async function showPage(currentPage) {
     var startI = Math.max(1, currentPage - Math.floor(numPageBtn / 2));
     var endI = Math.min(numPages, startI + numPageBtn - 1);
 
+    // Add "FIRST" and "..." buttons if necessary
     if (currentPage > Math.floor(numPageBtn / 2)) {
         $('#pagination').append(`
             <button type="button" class="btn btn-dark pageBtn" id="page1" pageNum="1">FIRST</button>
@@ -111,14 +124,14 @@ async function showPage(currentPage) {
         `);
     }
 
-    // Add PREV button
+    // Add "PREV" button
     if (currentPage > 1) {
         $('#pagination').append(`
             <button type="button" class="btn btn-dark pageBtn" id="page${currentPage - 1}" pageNum="${currentPage - 1}">PREV</button>
         `);
     }
 
-    // If the current button's page number matches current page, make it stand out
+    // Add page buttons and highlight current page button
     for (let i = startI; i <= endI; i++) {
         const buttonClass = i === currentPage ? 'btn-success' : 'btn-dark';
         $('#pagination').append(`
@@ -126,13 +139,14 @@ async function showPage(currentPage) {
         `);
     }
 
-    // Add NEXT button
+    // Add "NEXT" button
     if (currentPage < numPages) {
         $('#pagination').append(`
             <button type="button" class="btn btn-dark pageBtn" id="page${currentPage + 1}" pageNum="${currentPage + 1}">NEXT</button>
         `);
     }
 
+    // Add "..." and "LAST" buttons if necessary
     if (currentPage < numPages - Math.floor(numPageBtn / 2)) {
         $('#pagination').append(`
             <button type="button" class="btn btn-dark" disabled>...</button>
@@ -140,11 +154,18 @@ async function showPage(currentPage) {
         `);
     }
 
+    // Remove any existing click event handlers on page buttons
     $('body').off('click', '.pageBtn');
+
+    // Add a click event handler to page buttons
     $('body').on('click', '.pageBtn', async function (e) {
+
+        // Get the page number from the clicked button
         const pageNum = parseInt($(this).attr('pageNum'));
         console.log("=====================pageBtn clicked");
         console.log("pageNum: " + pageNum);
+
+        // Call the showPage function to display the clicked page
         showPage(pageNum);
     });
 }
