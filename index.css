@@ -1,3 +1,15 @@
+#pokeCards {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+
+.modal img {
+    width: 100%;
+    height: 100%;
+}
+
 body,
 html {
     height: 100%;
@@ -9,6 +21,10 @@ html {
     justify-content: center;
     align-items: center;
     height: 100%;
+}
+
+.pagination {
+    justify-content: center;
 }
 
 #pokemon {
@@ -37,6 +53,9 @@ h3 {
     justify-content: center;
 }
 
+.black-btn {
+    background-color: #23282d;
+}
 .filterCard {
     width: auto;
     height: auto;
@@ -156,6 +175,10 @@ label.form-check-label[for="ice"] {
 
 label.form-check-label[for="dragon"] {
     color: #7038F8;
+}
+
+label.form-check-label[for="dark"] {
+    color: #705898;
 }
 
 label.form-check-label[for="fairy"] {
